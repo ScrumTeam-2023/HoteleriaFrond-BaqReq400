@@ -6,6 +6,7 @@ import { HomePage } from "./pages/HomePage/HomePage";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { NotFound } from "./pages/NotFound";
 import { LoginPage } from "./pages/LoginPage";
+import { RegisterPage } from './pages/RegisterPage'
 
 export const AuthContext = createContext();
 
@@ -38,6 +39,10 @@ export const Index = () => {
                     {
                         path:'/',
                         element: <HomePage/>
+                    },
+                    {
+                        path: '/register',
+                        element:  <RegisterPage></RegisterPage>
                     },
                     {
                         path: '/login',
