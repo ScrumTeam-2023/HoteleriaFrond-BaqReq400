@@ -6,6 +6,6 @@ import './HomeStyle.css'
 
 export const HomePage = () => {
   return (
-    <div>Lel</div>
+    <div>Xiquins Amazing Homepage</div>
   )
 }
