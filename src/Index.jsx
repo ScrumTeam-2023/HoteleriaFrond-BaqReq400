@@ -6,7 +6,13 @@ import { HomePage } from "./pages/HomePage/HomePage";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { NotFound } from "./pages/NotFound";
 import { LoginPage } from "./pages/LoginPage";
-import { RegisterPage } from './pages/RegisterPage'
+import { DashboardPage } from './pages/DashboardPage/DashboardPage'
+import { AdicionalServices } from './pages/AdicionalServices/AdicionalServices';
+import  { UserPage} from './pages/UserPage/UserPage'
+import { Events } from './pages/Eventos/Events';
+import { Hotel } from './pages/Hoteles/Hotel'
+import { Rooms } from './pages/Rooms/Rooms';
+import { Reservation } from './pages/Reservation/Reservation';
 
 export const AuthContext = createContext();
 
@@ -23,7 +29,7 @@ export const Index = () => {
                 if(token) setLoggedIn(true)
 
             }, [])
-
+                
 
 
 
@@ -41,17 +47,44 @@ export const Index = () => {
                         element: <HomePage/>
                     },
                     {
-                        path: '/register',
-                        element:  <RegisterPage></RegisterPage>
-                    },
-                    {
                         path: '/login',
                         element: <LoginPage></LoginPage>
                     },
                     {
-                        path: '/dashboard'
+                        path: '/dashboard',
+                        element:  loggedIn ? <DashboardPage/> : <LoginPage/>,
+                        children:[
+                            {
+                                path: 'user',
+                                element: <UserPage/>
+                                
+                            },
+                            {
+                                path: 'events',
+                                element: <Events/>
+                            },
+                            {
+                                path: 'services',
+                                element: <AdicionalServices/>
+
+                            },
+                            {
+                                path: 'hotel',
+                                element: <Hotel/>
+                            },
+                            {
+                                path: 'rooms',
+                                element: <Rooms></Rooms>
+                            },
+                            {
+                                path: 'reservation',
+                                element: <Reservation/>
+                            }
+                        ]
+                        
 
                     }
+                    
                 ]
 
             }])
