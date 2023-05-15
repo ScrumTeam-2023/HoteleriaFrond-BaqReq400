@@ -1,9 +1,8 @@
 import React, { useState , useContext} from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../Index'
 import Swal from 'sweetalert2'
 import axios from 'axios'
-import { Link } from 'react-router-dom/dist'
  //*--------------------------------------------------------------------------------------------------------------------------------------------------------------------*
 
 import {
@@ -70,10 +69,9 @@ export const LoginPage = () => {
 
 //*--------------------------------------------------------------------------------------------------------------------------------------------------------------------*
                                                                             //HTML
-//*--------------------------------------------------------------------------------------------------------------------------------------------------------------------*
+ //*--------------------------------------------------------------------------------------------------------------------------------------------------------------------*
   return (
         <>
-         <br></br>
           <MDBContainer className="my-5">
                     <br></br>
                 <MDBCard>
@@ -89,7 +87,7 @@ export const LoginPage = () => {
                        
                     <MDBCardBody className='d-flex flex-column'>
 
-                        <div className='d-flex flex-row mt-2 justify-center'>
+                        <div className='d-flex flex-row mt-2'>
                         <MDBIcon fas icon="fas fa-hotel fa-3x me-3" style={{ color: '#9C7C4B' }}/>
                         <span className="h1 fw-bold mb-0">Hotelery Lario</span>
                         </div>
@@ -107,7 +105,7 @@ export const LoginPage = () => {
                         <MDBBtn onClick={(e)=> logIn(e)}  className="mb-4 px-5" color='dark' size='lg'>Login</MDBBtn>
 
                         <a className="small text-muted" href="#!">Forgot password?</a>
-                        <Link to='/register' >
+                        <Link to='register'>
                         <p className="mb-5 pb-lg-2" style={{color: '#393f81'}}>Don't have an account? <a href="#!" style={{color: '#393f81'}}>Register here for FREE!</a></p>
                         </Link>
 
