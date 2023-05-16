@@ -13,6 +13,8 @@ import { Events } from './pages/Eventos/Events';
 import { Hotel } from './pages/Hoteles/Hotel'
 import { Rooms } from './pages/Rooms/Rooms';
 import { Reservation } from './pages/Reservation/Reservation';
+import { UserUpdate } from './pages/UserPage/UserUpdate';
+
 
 export const AuthContext = createContext();
 
@@ -56,9 +58,17 @@ export const Index = () => {
                         children:[
                             {
                                 path: 'user',
-                                element: <UserPage/>
+                                element: <UserPage/>,
                                 
                             },
+                            {
+                                path: 'user/update/:id',
+                                element: <UserUpdate/>,
+                                
+                            },
+
+
+                            
                             {
                                 path: 'events',
                                 element: <Events/>
