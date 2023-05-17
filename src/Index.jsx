@@ -7,14 +7,14 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { NotFound } from "./pages/NotFound";
 import { LoginPage } from "./pages/LoginPage";
 import { DashboardPage } from './pages/DashboardPage/DashboardPage'
-import { AdicionalServices } from './pages/AdicionalServices/AdicionalServices';
+import { AddServicesPage } from './pages/AddServices/AddServicesPage'
 import  { UserPage} from './pages/UserPage/UserPage'
 import { Events } from './pages/Eventos/Events';
 import { Hotel } from './pages/Hoteles/Hotel'
 import { Rooms } from './pages/Rooms/Rooms';
 import { Reservation } from './pages/Reservation/Reservation';
 import { UserUpdate } from './pages/UserPage/UserUpdate';
-
+import { AddServicesUpdate } from './pages/AddServices/AddServicesUpdate';
 
 export const AuthContext = createContext();
 
@@ -66,17 +66,18 @@ export const Index = () => {
                                 element: <UserUpdate/>,
                                 
                             },
-
-
-                            
                             {
                                 path: 'events',
                                 element: <Events/>
                             },
                             {
                                 path: 'services',
-                                element: <AdicionalServices/>
+                                element: <AddServicesPage/>
 
+                            },
+                            {
+                                path:'services/update/:id',
+                                element: <AddServicesUpdate/>  
                             },
                             {
                                 path: 'hotel',
