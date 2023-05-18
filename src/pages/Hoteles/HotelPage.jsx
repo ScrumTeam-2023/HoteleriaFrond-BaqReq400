@@ -1,9 +1,10 @@
 import React, { useState , useEffect } from "react";
 import axios from "axios";
-import { UserTable } from "../../Components/UserTable/UserTable";
+import { HotelTable} from '../../Components/HotelTable/HotelTable'
 import Swal from 'sweetalert2'
 import { Modal } from "@mui/base";
 import { Typography , Box } from "@mui/material";
+import '../css/SearchStyle.css'
 
 
 import {
@@ -19,9 +20,12 @@ import {
   }
   from 'mdb-react-ui-kit';
 
-export const UserPage = ()=>{
+export const HotelPage = ()=>{
 //-------------------------------------------------------------------------------------------------------------------------------------------\\
-    const [user,setUser] = useState([{}])
+    const [hotel,setHotel] = useState([{}])
+    const [ user,setUser] = useState([])
+
+
 //-------------------------------------------------------------------------------------------------------------------------------------------\\
     //Modal
 //-------------------------------------------------------------------------------------------------------------------------------------------\\
@@ -50,6 +54,20 @@ export const UserPage = ()=>{
 
 
 //---------------------Agregar------------------------------------------------------------------------------------------------------\\
+    const getHotel = async()=>{
+        try {
+            const { data } = await axios.get('http://localhost:3000/hotel/get',/*{headers: headers}*/)
+            if(data.hotel){
+                setHotel(data.hotel)
+                console.log(data.hotel)
+            }
+        } catch (err) {
+            console.log(err)
+            
+        }
+    }
+
+
     const getUsers = async()=>{
         try {
             const { data } = await axios.get('http://localhost:3000/user/get',{headers: headers})
@@ -63,28 +81,27 @@ export const UserPage = ()=>{
         }
     }
 
-    const addUser = async()=>{
+    const addHotel = async()=>{
         try {
-            let user = {
+            let hotel = {
                 name: document.getElementById('inputName').value,
-                surname: document.getElementById('inputSur').value,
-                username: document.getElementById('inputUser').value,
-                password: document.getElementById('inputPassword').value,
+                address: document.getElementById('inputAddr').value,
+                description: document.getElementById('inputDescr').value,
                 email: document.getElementById('inputEmail').value,
                 phone: document.getElementById('inputPhone').value,
-                role: document.getElementById('inputRole').value
+                user: document.getElementById('inputUser').value,
             }
-            const { data } = await axios.post(`http://localhost:3000/user/save`, user,{headers: headers})
-            getUsers()
+            const { data } = await axios.post(`http://localhost:3000/hotel/add`, hotel/*{headers: headers}*/)
+            getHotel()
             if(data.message){
                 Swal.fire({
                         icon:'success',
                         title: "Lets give Em The Best",
-                        text: 'User Added succesfully!',
+                        text: 'Hotel Added succesfully!',
                         timer: 4000
                         
                     })
-                    getUsers();
+                    getHotel();
             }
           
         } catch (err) {
@@ -100,11 +117,12 @@ export const UserPage = ()=>{
 //--------------------DobleFuncion---------------------------------------------------------------------------------------------------------------\\
     const addThem = async()=>{
         handleClose();
-        addUser();
-        getUsers();
+        addHotel();
+        getHotel();
     }
 
     useEffect(() => {
+        getHotel();
         getUsers();
       },[]);
     
@@ -112,20 +130,26 @@ export const UserPage = ()=>{
 //-------------------------------------------------------------------------------------------------------------------------------------------\\
 
     return(
-        <div>
+         <div>
+                <div className="search-container">
+                    <input type="text" className="search-input" placeholder="Search..." />
+                    <button className="search-button">
+                    <i className="fa fa-search"></i>
+                    </button>
+                </div>
             <div className="left binding color">
             <MDBIcon fas icon="user-tie fa-5x me-3"/>
-             | USER PAGE
+             | Hotel PAGE
                 <div className="left binding color">
                     <br></br>
                 <h3>See who are working!</h3>
                 </div>
             </div>
 
-            <button className="btn btn-warning" onClick={handleOpen}>ADD MANAGERS</button>
+            <button className="btn btn-warning" onClick={handleOpen}>ADD Hotel</button>
 
             <br></br>
-            <UserTable/>
+            <HotelTable/>
 
                 <Modal
                   open={open}
@@ -135,7 +159,7 @@ export const UserPage = ()=>{
                 >
                         <Box sx={style}>
                             <Typography id="modal-modal-title" variant='h6' component="h2">
-                                Add New User
+                                Add New Hotel
                             </Typography>
                             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                                 <h4>Please fill all fields To Add a User</h4> 
@@ -148,18 +172,13 @@ export const UserPage = ()=>{
 
 
                                     <div className="mb-3">
-                                        <label htmlFor="inputSur" className="form-label">Surname</label>
-                                        <input type="text" className="form-control" id="inputSur" required  />
+                                        <label htmlFor="inputAddr" className="form-label">Address</label>
+                                        <input type="text" className="form-control" id="inputAddr" required  />
                                     </div>
 
                                     <div className="mb-3">
-                                        <label htmlFor="inputUser" className="form-label">Username</label>
-                                        <input type="text" className="form-control" id="inputUser" required  />
-                                    </div>
-
-                                    <div className="mb-3">
-                                        <label htmlFor="inputPassword" className="form-label">Password</label>
-                                        <input type="password" className="form-control" id="inputPassword" required  />
+                                        <label htmlFor="inputDescr" className="form-label">Description</label>
+                                        <input type="text" className="form-control" id="inputDescr" required  />
                                     </div>
 
                                     <div className="mb-3">
@@ -167,18 +186,30 @@ export const UserPage = ()=>{
                                         <input type="email" className="form-control" id="inputEmail" required  />
                                     </div>
 
+                                    
+
                                     <div className="mb-3">
                                         <label htmlFor="inputPhone" className="form-label">Phone</label>
                                         <input type="text" className="form-control" id="inputPhone" required  />
                                     </div>
                                     
                                     <div className="mb-3">
-                                        <label htmlFor="inputRole" className="form-label">Role</label>
-                                        <input type="text" className="form-control" id="inputRole" required  />
+                                        <label htmlFor="inputUser" className="form-label">client</label>
+                                        <select className="form-control" id="inputUser">
+                                         {
+                                            user.map(({_id, name}, i)=>{
+                                                return(
+                                                        <option key={i} value={_id}>{name}</option>
+                                    
+                                                         )
+                                                 })
+                                        }
+                                        </select>
                                     </div>
+
                                     {/* Labels */}
                                 </form>
-                                    <span><button className="btn btn-success" onClick={()=> addThem()}>Add New User</button></span>
+                                    <span><button className="btn btn-success"  onClick={()=> addThem()}>Add New Hotel</button></span>
                                     <span>      </span>
                                     <span><button className="btn btn-danger" onClick={handleClose}>Cancel</button></span>
 
