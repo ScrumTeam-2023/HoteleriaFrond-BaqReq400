@@ -1,5 +1,4 @@
 
-
 export const User = ({name,surname,username,email,phone,role}) => {
   return (
     <>

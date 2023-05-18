@@ -105,14 +105,16 @@ export const LoginPage = () => {
                         <MDBBtn onClick={(e)=> logIn(e)}  className="mb-4 px-5" color='dark' size='lg'>Login</MDBBtn>
 
                         <a className="small text-muted" href="#!">Forgot password?</a>
-                        <Link to='register'>
+                        <Link to='/register'>
                         <p className="mb-5 pb-lg-2" style={{color: '#393f81'}}>Don't have an account? <a href="#!" style={{color: '#393f81'}}>Register here for FREE!</a></p>
                         </Link>
-
+                        
+                        <Link to='/register'>
                         <div className='d-flex flex-row justify-content-start'>
                         <a href="#!" className="small text-muted me-1">Terms of use.</a>
                         <a href="#!" className="small text-muted">Privacy policy</a>
                         </div>
+                        </Link>
 
                     </MDBCardBody>
                     </MDBCol>
