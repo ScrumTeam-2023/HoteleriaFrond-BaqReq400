@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { User } from "../User/User";
+import { Room } from "../Room/Room";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import React from 'react'
 import { Modal } from "@mui/base";
 import { Typography , Box } from "@mui/material";
-import { UserUpdate } from "../../pages/UserPage/UserUpdate";
 
 import {
     MDBBtn,
@@ -21,7 +20,8 @@ import {
   from 'mdb-react-ui-kit';
 
 
-export const UserTable = () => {
+export const RoomTable = () => {
+    const [room, setRoom] = useState([{}]);
 
     const style = {
         position: 'absolute',
@@ -40,26 +40,24 @@ export const UserTable = () => {
         'Authorization': localStorage.getItem('token')
       }
     //--------------------------------------------//
-        const [user, setUser] = useState([{}])
-        
-        const getUsers = async()=>{
-            try {
-                const { data } = await axios.get('http://localhost:3000/user/get')
-                setUser(data.user)
-            } catch (err) {
-                console.log
-                
-            }
+
+    const getRooms = async()=>{
+        try {
+            const { data } = await axios.get('http://localhost:3000/rooms/get');
+            setRoom(data);
+        } catch (err) {
+            console.error(err);
         }
+    }
 
         
 
-        const deleteUser = async(id)=>{
+        const deleteRoom = async(id)=>{
             try{
-                let confirmDelete = confirm('Are you sure to delete this User?')
+                let confirmDelete = confirm('Are you sure to delete this room?')
                 if(confirmDelete){
-                    const { data } = await axios.delete(`http://localhost:3000/user/delete/${id}`)
-                    getUsers()
+                    const { data } = await axios.delete(`http://localhost:3000/rooms/delete/${id}`)
+                    getRooms()
                     
                 }
             }catch(err){
@@ -69,13 +67,13 @@ export const UserTable = () => {
 
         const handleUpdate = async(id)=>{
             try {
-                const { data } = await axios.get(`http://localhost:3000/user/getOne/${id}`,{headers: headers});
+                const { data } = await axios.get(`http://localhost:3000/rooms/getOne/${id}`,{headers: headers});
                 if(data.message){
                   console.warn(id)
-                  setUser();
+                  setRoom();
                 }
             } catch (err) {
-                
+                console.log(err)
             }
 
         }
@@ -84,7 +82,7 @@ export const UserTable = () => {
 
 
 
-        useEffect(()=>{getUsers();},[]);
+        useEffect(()=>{getRooms();},[]);
     //--------------------------------------------//
 
   return (
@@ -93,18 +91,17 @@ export const UserTable = () => {
             <thead>
             <tr>
                 <th></th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Role</th>
+                <th>roomNumber</th>
+                <th>description</th>
+                <th>price</th>
+                <th>available</th>
+                <th>hotel</th>
                 <th><h2>Options</h2></th>
             </tr>
             </thead>
             <tbody>
                 {
-                    user.map(({_id,name,surname,username,email,phone,role},index)=>{
+                    room.map(({_id,roomNumber,description,price,available,hotel},index)=>{
 
                         return(
                             
@@ -112,15 +109,15 @@ export const UserTable = () => {
                                 <td>
                                     <h1><MDBIcon fas icon="user-circle fa-3x me-3" /></h1>
                                 </td>   
-                                <User
-                                    name={name}
-                                    surname={surname}
-                                    username={username}
-                                    email={email}
-                                    phone={phone}
-                                    role={role}
+                                <Room
+                                    roomNumber={roomNumber}
+                                    description={description}
+                                    price={price}
+                                    available={available}
+                                    hotel={hotel}
+
                                 >
-                                </User>
+                                </Room>
                                 <div>
                                     {/*  */}
                                 {/* Actualizar  /${_id}*/}
@@ -130,7 +127,7 @@ export const UserTable = () => {
                                 
                                 {/*  */}
                                 {/* Eliminar */}
-                                <td><button className="btn btn-danger" onClick={()=> deleteUser(_id)}>Delete</button></td>
+                                <td><button className="btn btn-danger" onClick={()=> deleteRoom(_id)}>Delete</button></td>
                                 <br></br>
                                 </div>
                                 
