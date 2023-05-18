@@ -7,14 +7,16 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { NotFound } from "./pages/NotFound";
 import { LoginPage } from "./pages/LoginPage";
 import { DashboardPage } from './pages/DashboardPage/DashboardPage'
-import { AddServicesPage } from './pages/AddServices/AddServicesPage'
+import { AdicionalServices } from './pages/AdicionalServices/AdicionalServices';
 import  { UserPage} from './pages/UserPage/UserPage'
-import { Events } from './pages/Eventos/Events';
+import { Events } from './pages/Events/EventsPage';
 import { Hotel } from './pages/Hoteles/Hotel'
 import { Rooms } from './pages/Rooms/Rooms';
-import { Reservation } from './pages/Reservation/Reservation';
+import { ReservationPage } from './pages/Reservation/ReservationPage';
 import { UserUpdate } from './pages/UserPage/UserUpdate';
-import { AddServicesUpdate } from './pages/AddServices/AddServicesUpdate';
+import { EventUpdate } from './pages/Events/EventsUpdate';
+import { RegisterPage } from './pages/RegisterPage';
+import { ReservationUpdate } from './pages/Reservation/ReservationUpdate';
 
 export const AuthContext = createContext();
 
@@ -53,6 +55,10 @@ export const Index = () => {
                         element: <LoginPage></LoginPage>
                     },
                     {
+                        path: '/register',
+                        element: <RegisterPage/>
+                    },
+                    {
                         path: '/dashboard',
                         element:  loggedIn ? <DashboardPage/> : <LoginPage/>,
                         children:[
@@ -71,13 +77,13 @@ export const Index = () => {
                                 element: <Events/>
                             },
                             {
-                                path: 'services',
-                                element: <AddServicesPage/>
-
+                                path: 'events/update/:id',
+                                element: <EventUpdate/>
                             },
                             {
-                                path:'services/update/:id',
-                                element: <AddServicesUpdate/>  
+                                path: 'services',
+                                element: <AdicionalServices/>
+
                             },
                             {
                                 path: 'hotel',
@@ -89,7 +95,11 @@ export const Index = () => {
                             },
                             {
                                 path: 'reservation',
-                                element: <Reservation/>
+                                element: <ReservationPage/>
+                            },
+                            {
+                                path: 'reservation/update/:id',
+                                element: <ReservationUpdate/>
                             }
                         ]
                         

@@ -16,8 +16,7 @@ import {
     MDBCol,
     MDBIcon,
     MDBInput
-  }
-  from 'mdb-react-ui-kit';
+} from 'mdb-react-ui-kit';
 
 export const UserPage = ()=>{
 //-------------------------------------------------------------------------------------------------------------------------------------------\\
@@ -74,7 +73,7 @@ export const UserPage = ()=>{
                 phone: document.getElementById('inputPhone').value,
                 role: document.getElementById('inputRole').value
             }
-            const { data } = await axios.post(`http://localhost:3000/user/save`, user,{headers: headers})
+            const { data } = await axios.post(`http://localhost:3000/user/save`, user)
             getUsers()
             if(data.message){
                 Swal.fire({

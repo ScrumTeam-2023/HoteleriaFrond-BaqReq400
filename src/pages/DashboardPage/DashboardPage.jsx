@@ -3,7 +3,7 @@ import './dashboard.css'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../Index'
 import { Outlet, Link } from 'react-router-dom'
-
+import { AdicionalServices } from '../AdicionalServices/AdicionalServices'
 
 import {
   MDBBtn,
